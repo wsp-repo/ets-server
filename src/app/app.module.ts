@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { EmulateModule } from '../emulate/emulate.module';
-import { StorageModule } from '../modules/storage/storage.module';
 import { KafkaModule } from '../modules/kafka/kafka.module';
+import { StorageModule } from '../modules/storage/storage.module';
 import { AppService } from './app.service';
 
 @Module({
-  imports: [StorageModule, KafkaModule, EmulateModule],
   exports: [StorageModule],
+  imports: [StorageModule, KafkaModule],
   providers: [AppService],
 })
 export class AppModule {}

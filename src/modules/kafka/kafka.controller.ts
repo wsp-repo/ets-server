@@ -6,14 +6,14 @@ import {
   Transport,
 } from '@nestjs/microservices';
 import {
-  AnyObject,
-  SetAttrPayload,
   AddEventPayload,
+  AnyObject,
   InitTracerPayload,
+  LoadSpanPayload,
   Patterns,
+  SetAttrPayload,
   StartSpanPayload,
   StopSpanPayload,
-  LoadSpanPayload,
 } from '@wspro/ets-client';
 
 import { KafkaService } from './kafka.service';

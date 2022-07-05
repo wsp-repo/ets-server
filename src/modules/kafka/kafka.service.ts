@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
-  SetAttrPayload,
   AddEventPayload,
+  AttrUnit,
   InitTracerPayload,
-  StartSpanPayload,
   LoadSpanPayload,
+  SetAttrPayload,
+  StartSpanPayload,
   StopSpanPayload,
 } from '@wspro/ets-client';
 
@@ -12,10 +13,15 @@ import { StorageService } from '../storage/storage.service';
 
 import {
   AttrEntity,
-  TracerEntity,
   EventEntity,
   SpanEntity,
+  TracerEntity,
 } from '../../interfaces';
+
+type UnitPayload = Omit<
+  InitTracerPayload | StartSpanPayload | LoadSpanPayload,
+  'attrs'
+>;
 
 @Injectable()
 export class KafkaService {
@@ -32,7 +38,7 @@ export class KafkaService {
         this.getEntity(new TracerEntity(), rawTracer),
       );
 
-      this.setAttrs(attrs.map((item) => ({ ...rawTracer, ...item })));
+      this.setUnitAttrs(rawTracer as UnitPayload, attrs as AttrUnit[]);
     } catch (error) {
       console.warn('KafkaService.initTracer: ', error);
     }
@@ -41,12 +47,12 @@ export class KafkaService {
   /**
    * Передает в стор запуск спана
    */
-  public async startSpan(payload: StartSpanPayload): Promise<void> {
+  public startSpan(payload: StartSpanPayload): void {
     try {
       const { attrs = [], ...rawSpan } = payload;
 
       this.storage.startSpan(this.getEntity(new SpanEntity(), rawSpan));
-      this.setAttrs(attrs.map((item) => ({ ...rawSpan, ...item })));
+      this.setUnitAttrs(rawSpan as UnitPayload, attrs as AttrUnit[]);
     } catch (error) {
       console.warn('KafkaService.startSpan: ', error);
     }
@@ -55,12 +61,12 @@ export class KafkaService {
   /**
    * Передает в стор загрузку спана
    */
-  public async loadSpan(payload: LoadSpanPayload): Promise<void> {
+  public loadSpan(payload: LoadSpanPayload): void {
     try {
       const { attrs = [], ...rawSpan } = payload;
 
       this.storage.loadSpan(this.getEntity(new SpanEntity(), rawSpan));
-      this.setAttrs(attrs.map((item) => ({ ...rawSpan, ...item })));
+      this.setUnitAttrs(rawSpan as UnitPayload, attrs as AttrUnit[]);
     } catch (error) {
       console.warn('KafkaService.loadSpan: ', error);
     }
@@ -69,7 +75,7 @@ export class KafkaService {
   /**
    * Передает в стор завершение спана
    */
-  public async stopSpan(payload: StopSpanPayload): Promise<void> {
+  public stopSpan(payload: StopSpanPayload): void {
     try {
       this.storage.stopSpan(this.getEntity(new SpanEntity(), payload));
     } catch (error) {
@@ -99,6 +105,14 @@ export class KafkaService {
     } catch (error) {
       console.warn('KafkaService.addEvent: ', error);
     }
+  }
+
+  /**
+   * Передает в стор установку аттрибутов юнита
+   */
+  private setUnitAttrs(unit: UnitPayload, attrs: AttrUnit[]): void {
+    const setAttrs = attrs.map((item) => ({ ...unit, ...item }));
+    this.setAttrs(setAttrs);
   }
 
   /**

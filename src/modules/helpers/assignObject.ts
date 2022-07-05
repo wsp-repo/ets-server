@@ -1,4 +1,4 @@
-import { AnyObject } from '../../interfaces';
+import { AnyObject } from '@wspro/ets-client';
 
 /**
  * Заполняет свойства объекта данными другого объекта

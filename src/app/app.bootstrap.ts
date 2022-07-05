@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions } from '@nestjs/microservices';
+import { KafkaOptions, MicroserviceOptions } from '@nestjs/microservices';
 import { getClientOptionsForKafkaTransport } from '@wspro/ets-client';
 
 import { AppModule } from './app.module';
@@ -7,11 +7,11 @@ import { AppModule } from './app.module';
 /**
  * Инициирует сервис
  */
-export async function bootstrap() {
+export async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   app.connectMicroservice<MicroserviceOptions>(
-    getClientOptionsForKafkaTransport(),
+    getClientOptionsForKafkaTransport() as KafkaOptions,
   );
 
   await app.startAllMicroservices();

@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { EventTypes } from '@wspro/ets-client';
+
 import { assignObject } from '../helpers';
+import { StorageQueries } from './storage.queries';
 
 import {
-  TracerEntity,
   AttrEntity,
   EventEntity,
   SpanEntity,
+  TracerEntity,
 } from '../../interfaces';
-
-import { StorageQueries } from './storage.queries';
 
 @Injectable()
 export class StorageService {
-  private saveTime: number = 0;
+  private saveTime = 0;
 
   private saveLocked: NodeJS.Timeout | undefined = undefined;
 
@@ -93,7 +93,7 @@ export class StorageService {
   /**
    * Проверяет условия для записи данных буферов
    */
-  private async checkSaveBuffers(): Promise<void> {
+  private checkSaveBuffers(): void {
     if (this.saveLocked) return;
 
     const wasSaved = Date.now() - this.saveTime;
@@ -128,7 +128,9 @@ export class StorageService {
       // такой порядок записи нужен для автоопределения реального
       // состояния закрытости спана по набору событий на start/stop
       if (spans.length > 0) await this.saveBufferSpans(spans);
-    } catch (e) {}
+    } catch (e) {
+      console.warn(e);
+    }
   }
 
   /**

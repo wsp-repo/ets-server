@@ -7,7 +7,10 @@ echo "Install dependencies..."
 npm install --save --save-exact \
     @nestjs/common@latest \
     @nestjs/microservices@latest \
+    @nestjs/platform-express@latest \
     @nestjs/core@latest \
+    @wspro/ets-client@latest \
+    kafkajs@latest \
     knex@latest \
     pg@latest
 

@@ -94,14 +94,14 @@ export class StorageQueries {
   /**
    * Возвращает конфиг соединения
    */
-  private getConfig(): any {
+  private getConfig(): Knex.Config {
     return {
       client: 'pg',
       connection: {
         database: process.env.POSTGRES_BASE || 'ets_base',
         host: process.env.POSTGRES_HOST || 'localhost',
         password: process.env.POSTGRES_PASS || 'ets_pass',
-        port: process.env.POSTGRES_PORT || 5432,
+        port: Number(process.env.POSTGRES_PORT) || 5432,
         user: process.env.POSTGRES_USER || 'ets_user',
       },
     };
