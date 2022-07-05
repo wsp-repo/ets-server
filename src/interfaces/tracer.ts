@@ -1,5 +1,7 @@
 export class TracerEntity {
-  tracer: string | null = null;
-  time: number | null = null;
-  name: string | null = null;
+  public tracer: string | null = null;
+
+  public time: number | null = null;
+
+  public name: string | null = null;
 }

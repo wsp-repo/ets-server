@@ -1,8 +1,13 @@
 export class AttrEntity {
-  tracer: string | null = null;
-  span: string | null = null;
-  time: number | null = null;
-  name: string | null = null;
-  value: string | null = null;
-  thread: string | null = null;
+  public tracer: string | null = null;
+
+  public span: string | null = null;
+
+  public time: number | null = null;
+
+  public name: string | null = null;
+
+  public value: string | null = null;
+
+  public thread: string | null = null;
 }

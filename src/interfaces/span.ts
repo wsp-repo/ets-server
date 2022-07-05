@@ -1,8 +1,13 @@
 export class SpanEntity {
-  thread: string | null = null;
-  tracer: string | null = null;
-  time: number | null = null;
-  name: string | null = null;
-  span: string | null = null;
-  parent: string | null = null;
+  public thread: string | null = null;
+
+  public tracer: string | null = null;
+
+  public time: number | null = null;
+
+  public name: string | null = null;
+
+  public span: string | null = null;
+
+  public parent: string | null = null;
 }

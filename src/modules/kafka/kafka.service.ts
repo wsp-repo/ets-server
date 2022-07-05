@@ -38,7 +38,7 @@ export class KafkaService {
         this.getEntity(new TracerEntity(), rawTracer),
       );
 
-      this.setUnitAttrs(rawTracer as UnitPayload, attrs as AttrUnit[]);
+      this.setUnitAttrs(rawTracer as UnitPayload, attrs);
     } catch (error) {
       console.warn('KafkaService.initTracer: ', error);
     }
@@ -52,7 +52,7 @@ export class KafkaService {
       const { attrs = [], ...rawSpan } = payload;
 
       this.storage.startSpan(this.getEntity(new SpanEntity(), rawSpan));
-      this.setUnitAttrs(rawSpan as UnitPayload, attrs as AttrUnit[]);
+      this.setUnitAttrs(rawSpan as UnitPayload, attrs);
     } catch (error) {
       console.warn('KafkaService.startSpan: ', error);
     }
@@ -66,7 +66,7 @@ export class KafkaService {
       const { attrs = [], ...rawSpan } = payload;
 
       this.storage.loadSpan(this.getEntity(new SpanEntity(), rawSpan));
-      this.setUnitAttrs(rawSpan as UnitPayload, attrs as AttrUnit[]);
+      this.setUnitAttrs(rawSpan as UnitPayload, attrs);
     } catch (error) {
       console.warn('KafkaService.loadSpan: ', error);
     }

@@ -1,11 +1,17 @@
 import { AnyObject, EventTypes } from '@wspro/ets-client';
 
 export class EventEntity {
-  tracer: string | null = null;
-  span: string | null = null;
-  time: number | null = null;
-  name: string | null = null;
-  data: AnyObject = {};
-  thread: string | null = null;
-  type: EventTypes | null = null;
+  public tracer: string | null = null;
+
+  public span: string | null = null;
+
+  public time: number | null = null;
+
+  public name: string | null = null;
+
+  public data: AnyObject = {};
+
+  public thread: string | null = null;
+
+  public type: EventTypes | null = null;
 }
