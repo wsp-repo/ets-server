@@ -1,0 +1,39 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowUnreachableCode": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "incremental": true,
+    "inlineSources": true,
+    "inlineSourceMap": false,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "target": "ES2018",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "noLib": false,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "useUnknownInCatchVariables": false,
+    "typeRoots": ["node_modules/@types"],
+    "strict": true,
+    "paths": {
+      "@wsp-nest/*": ["./src/npm-mods/*/src"]
+    }
+
+  },
+  "include": ["./src"],
+  "exclude": ["./node_modules", "./dist"]
+}
