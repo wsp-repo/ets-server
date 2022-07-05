@@ -19,6 +19,7 @@ npm install --save-dev --save-exact \
     @nestjs/cli@latest \
     @types/node@latest \
     @types/pg@latest \
+    cross-env@latest \
     rimraf@latest \
     ts-loader@latest \
     ts-node@latest \
