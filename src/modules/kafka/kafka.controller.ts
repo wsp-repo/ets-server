@@ -8,9 +8,10 @@ import {
 import {
   AddEventPayload,
   AnyObject,
+  getPattern,
   InitTracerPayload,
+  KafkaPatterns,
   LoadSpanPayload,
-  Patterns,
   SetAttrPayload,
   StartSpanPayload,
   StopSpanPayload,
@@ -30,32 +31,32 @@ interface Message {
 export class KafkaController {
   constructor(private readonly service: KafkaService) {}
 
-  @MessagePattern(Patterns.InitTracer, Transport.KAFKA)
+  @MessagePattern(getPattern(KafkaPatterns.InitTracer), Transport.KAFKA)
   public initTracer(@Payload() message: Message): Promise<void> {
     return this.service.initTracer(this.getValue<InitTracerPayload>(message));
   }
 
-  @EventPattern(Patterns.SetAttrs, Transport.KAFKA)
+  @EventPattern(getPattern(KafkaPatterns.SetAttrs), Transport.KAFKA)
   public setAttrs(@Payload() message: Message): void {
     this.service.setAttrs(this.getValue<SetAttrPayload[]>(message));
   }
 
-  @EventPattern(Patterns.AddEvent, Transport.KAFKA)
+  @EventPattern(getPattern(KafkaPatterns.AddEvent), Transport.KAFKA)
   public addEvent(@Payload() message: Message): void {
     this.service.addEvent(this.getValue<AddEventPayload>(message));
   }
 
-  @EventPattern(Patterns.StartSpan, Transport.KAFKA)
+  @EventPattern(getPattern(KafkaPatterns.StartSpan), Transport.KAFKA)
   public startSpan(@Payload() message: Message): void {
     this.service.startSpan(this.getValue<StartSpanPayload>(message));
   }
 
-  @EventPattern(Patterns.LoadSpan, Transport.KAFKA)
+  @EventPattern(getPattern(KafkaPatterns.LoadSpan), Transport.KAFKA)
   public loadSpan(@Payload() message: Message): void {
     this.service.loadSpan(this.getValue<LoadSpanPayload>(message));
   }
 
-  @EventPattern(Patterns.StopSpan, Transport.KAFKA)
+  @EventPattern(getPattern(KafkaPatterns.StopSpan), Transport.KAFKA)
   public stopSpan(@Payload() message: Message): void {
     this.service.stopSpan(this.getValue<StopSpanPayload>(message));
   }

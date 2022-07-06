@@ -31,7 +31,7 @@
     "@nestjs/core": "8.4.7",
     "@nestjs/microservices": "8.4.7",
     "@nestjs/platform-express": "8.4.7",
-    "@wspro/ets-client": "1.0.2",
+    "@wspro/ets-client": "1.0.4",
     "kafkajs": "2.1.0",
     "knex": "2.1.0",
     "pg": "8.7.3"
@@ -51,7 +51,7 @@
   "prettier": "@wspro/linter/prettier",
   "devDependencies": {
     "@nestjs/cli": "8.2.8",
-    "@types/node": "18.0.1",
+    "@types/node": "18.0.3",
     "@types/pg": "8.6.5",
     "@typescript-eslint/eslint-plugin": "5.30.5",
     "@typescript-eslint/parser": "5.30.5",
