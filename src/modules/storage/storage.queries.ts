@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { getObject } from '@wspro/config';
 import { EventTypes } from '@wspro/ets-client';
 import knex, { Knex } from 'knex';
 
@@ -95,15 +96,14 @@ export class StorageQueries {
    * Возвращает конфиг соединения
    */
   private getConfig(): Knex.Config {
-    return {
-      client: 'pg',
-      connection: {
-        database: process.env.POSTGRES_BASE || 'ets_base',
-        host: process.env.POSTGRES_HOST || 'localhost',
-        password: process.env.POSTGRES_PASS || 'ets_pass',
-        port: Number(process.env.POSTGRES_PORT) || 5432,
-        user: process.env.POSTGRES_USER || 'ets_user',
-      },
-    };
+    const connection = getObject('ETS_POSTGRES', {
+      base: 'ets_base',
+      host: '127.0.0.1',
+      pass: 'ets_pass',
+      port: '5432',
+      user: 'ets_user',
+    });
+
+    return { client: 'pg', connection };
   }
 }

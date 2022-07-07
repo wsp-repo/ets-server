@@ -9,6 +9,7 @@ npm install --save --save-exact \
     @nestjs/microservices@latest \
     @nestjs/platform-express@latest \
     @nestjs/core@latest \
+    @wspro/config@latest \
     @wspro/ets-client@latest \
     kafkajs@latest \
     knex@latest \

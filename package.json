@@ -31,7 +31,8 @@
     "@nestjs/core": "8.4.7",
     "@nestjs/microservices": "8.4.7",
     "@nestjs/platform-express": "8.4.7",
-    "@wspro/ets-client": "1.0.4",
+    "@wspro/config": "1.0.0",
+    "@wspro/ets-client": "1.0.5",
     "kafkajs": "2.1.0",
     "knex": "2.1.0",
     "pg": "8.7.3"
