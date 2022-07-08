@@ -1,3 +1,5 @@
+import '@wspro/config';
+
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { getKafkaOptions } from '@wspro/ets-client';

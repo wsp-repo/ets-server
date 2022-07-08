@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { getObject } from '@wspro/config';
 import { EventTypes } from '@wspro/ets-client';
-import knex, { Knex } from 'knex';
+import { Knex } from 'knex';
+
+import { KnexQueries } from '../../common/knex/knex.queries';
 
 import {
   AttrEntity,
@@ -11,13 +12,7 @@ import {
 } from '../../interfaces';
 
 @Injectable()
-export class StorageQueries {
-  private readonly knex: Knex;
-
-  constructor() {
-    this.knex = knex(this.getConfig());
-  }
-
+export class StorageQueries extends KnexQueries {
   /**
    * Добавляет в трекинг трейсер
    */
@@ -90,20 +85,5 @@ export class StorageQueries {
         ...row,
       })),
     );
-  }
-
-  /**
-   * Возвращает конфиг соединения
-   */
-  private getConfig(): Knex.Config {
-    const connection = getObject('ETS_POSTGRES', {
-      base: 'ets_base',
-      host: '127.0.0.1',
-      pass: 'ets_pass',
-      port: '5432',
-      user: 'ets_user',
-    });
-
-    return { client: 'pg', connection };
   }
 }

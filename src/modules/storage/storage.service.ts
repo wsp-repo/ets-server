@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EventTypes } from '@wspro/ets-client';
 
-import { assignObject } from '../helpers';
+import { assignObject } from '../../common/helpers';
 import { StorageQueries } from './storage.queries';
 
 import {
