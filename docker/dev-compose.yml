@@ -5,7 +5,7 @@ services:
     container_name: 'postgres'
     image: 'postgres:14.3-bullseye'
     volumes:
-      - ./volumes/postgres/:/var/lib/postgresql/data/
+      - ./postgres/:/var/lib/postgresql/data/
     networks:
       - 'wsp-ets'
     ports:
@@ -13,6 +13,7 @@ services:
     environment:
       - POSTGRES_USER=ets_user
       - POSTGRES_PASSWORD=ets_pass
+      - POSTGRES_DB=ets_base
     restart: 'on-failure'
 
   zookeeper:

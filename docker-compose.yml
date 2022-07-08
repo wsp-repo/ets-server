@@ -1,0 +1,89 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: 'postgres'
+    image: 'postgres:14.3-bullseye'
+    volumes:
+      - ./docker/postgres/:/var/lib/postgresql/data/
+    networks:
+      - 'wsp-ets'
+    ports:
+      - '127.0.0.1:5432:5432'
+    environment:
+      - POSTGRES_USER=ets_user
+      - POSTGRES_PASSWORD=ets_pass
+      - POSTGRES_DB=ets_base
+    restart: 'on-failure'
+
+  zookeeper:
+    container_name: 'zookeeper'
+    image: 'bitnami/zookeeper:latest'
+    networks:
+      - 'wsp-ets'
+    ports:
+      - '127.0.0.1:2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    restart: 'on-failure'
+
+  kafka:
+    container_name: 'kafka'
+    image: 'bitnami/kafka:latest'
+    networks:
+      - 'wsp-ets'
+    ports:
+      - '127.0.0.1:9092:9093'
+      - '127.0.0.1:9093:9093'
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    depends_on:
+      - 'zookeeper'
+    restart: 'on-failure'
+
+  kafka_ui:
+    container_name: 'kafka-ui'
+    image: 'provectuslabs/kafka-ui:latest'
+    networks:
+      - 'wsp-ets'
+    ports:
+      - '127.0.0.1:8080:8080'
+    environment:
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+    depends_on:
+      - 'kafka'
+    restart: 'on-failure'
+
+  ets_server:
+    container_name: 'ets-server'
+    build: .
+    networks:
+      - 'wsp-ets'
+    ports:
+      - '127.0.0.1:80:80'
+    environment:
+      - ETS_KAFKA_HOST=kafka:9092
+      - ETS_KAFKA_GROUP_ID=wsp-ets
+      - ETS_POSTGRES_HOST=postgres
+      - ETS_POSTGRES_USER=ets_user
+      - ETS_POSTGRES_PASS=ets_pass
+      - ETS_POSTGRES_BASE=ets_base
+      - ETS_POSTGRES_PORT=5432
+    depends_on:
+      - 'postgres'
+      - 'kafka'
+    restart: 'on-failure'
+
+networks:
+  wsp-ets:
+    driver: bridge
